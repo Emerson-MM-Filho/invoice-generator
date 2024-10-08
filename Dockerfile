@@ -22,5 +22,8 @@ RUN poetry install
 # Expose port for easier debugging (optional)
 EXPOSE 5000
 
+# Change the entrypoint script permissions
+RUN chmod +x entrypoint.sh
+
 # Run the Python application
-CMD ["python", "src.app.py"]
+CMD ["./entrypoint.sh", "python", "src/app.py"]
