@@ -2,7 +2,7 @@ services:
   app:
     build: .
     volumes:
-      - .:/app
+      - ./src:/app/src
     environment:
       - PYTHONUNBUFFERED=1
     ports:
