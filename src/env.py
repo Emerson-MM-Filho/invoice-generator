@@ -7,3 +7,5 @@ class Env(BaseSettings):
     )
 
     TARGET_FOLDER_ID: str = "ADD_YOUR_TARGET_FOLDER_ID"
+    EMAIL_FROM: str = "ADD_YOUR_EMAIL_ADDRESS"
+    EMAIL_PASSWORD: str = "ADD_YOUR_EMAIL_PASSWORD"
