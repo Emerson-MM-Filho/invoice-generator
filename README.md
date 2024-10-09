@@ -1,13 +1,13 @@
 # Invoice Automation Project
 
-This project automatically generates invoices, sends them via email, stores them on Google Drive, and confirms the invoice generation and email delivery via WhatsApp.
+This project automatically generates invoices, sends them via email, stores them on Google Drive, and fill Notion database with the invoice details.
 
 ## Features
 
 - Generate PDF invoices automatically.
 - Send invoices via email.
 - Store invoices in Google Drive.
-- Send confirmation of invoice generation and email delivery via WhatsApp.
+- Fill Notion database with invoice details.
 
 ## Requirements
 
@@ -46,7 +46,7 @@ The script will:
 - Generate the invoice PDF.
 - Send it via email.
 - Upload it to Google Drive.
-- Send a WhatsApp confirmation.
+- Fill the Notion database with the invoice details.
 
 ## Development
 
