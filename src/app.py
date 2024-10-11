@@ -92,3 +92,59 @@ def upload_invoice(
     )
 
     return file
+
+
+if __name__ == "__main__":
+    from env import Env
+    from google_drive import get_credentials, list_files
+    from send_email import send_email
+
+    env = Env()
+
+    receiver = Receiver(
+        name="Ampulla",
+        email="emerson.dev.machado@gmail.com",
+        address="Av. Tromposky, 354",
+        city="Florianópolis",
+        state="Santa Catarina",
+        zip_code="88015-300",
+        country="Brazil",
+        folder_id=env.TARGET_FOLDER_ID,
+    )
+    bill_to = BillTo(
+        name="Wisecut",
+        address="1000 Brickell Ave Ste 715 PMB 5015, Miami FL 33131",
+    )
+    invoice = Invoice(
+        number="13",
+        date=datetime.date(2024, 10, 1),
+        due_date=datetime.date(2024, 10, 5),
+        receiver=receiver,
+        bill_to=bill_to,
+        description="Software Engineering services",
+        total="2.200,00",
+    )
+
+    # Generate the invoice PDF
+    invoice_file_path = generate_invoice_pdf(invoice)
+    print("Invoice generated as {file}".format(file=invoice_file_path))
+
+    # Generate google drive credentials
+    credentials = get_credentials()
+
+    # Upload the invoice to Google Drive
+    uploaded_file = upload_invoice(invoice, credentials)
+
+    print(f"File uploaded: {uploaded_file}")
+    files = list_files(credentials, receiver.folder_id)
+
+    print("Sent email with invoice attached")
+    send_email(
+        from_=env.EMAIL_FROM,
+        password=env.EMAIL_PASSWORD,
+        to=["emersonmmfilho@gmail.com"],
+        cc=["emerson.dev.machado@gmail.com"],
+        subject="Invoice",
+        body="Segue invoice em anexo",
+        attachments=[invoice_file_path],
+    )
