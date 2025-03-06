@@ -8,7 +8,7 @@ from google.auth.external_account_authorized_user import (
 )
 from google.oauth2.credentials import Credentials
 from jinja2 import Environment, FileSystemLoader
-from pydantic import BaseModel
+from pydantic import BaseModel, field_serializer
 
 from google_drive import upload_file
 
@@ -50,6 +50,10 @@ class Invoice(BaseModel):
             day=self.date.day,
             number=self.number,
         )
+
+    @field_serializer("due_date", "date", when_used="json")
+    def serialize_due_date(self, value: datetime.date):
+        return value.strftime("%m/%d/%Y")
 
 
 def generate_invoice_pdf(invoice: Invoice):
